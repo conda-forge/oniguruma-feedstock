@@ -1,4 +1,4 @@
-{% set version = "6.9.9" %}
+{% set version = "6.9.10" %}
 
 package:
   name: oniguruma
@@ -7,7 +7,7 @@ package:
 source:
   fn: onig-{{ version }}.tar.gz
   url: https://github.com/kkos/oniguruma/releases/download/v{{ version }}/onig-{{ version }}.tar.gz
-  sha256: 60162bd3b9fc6f4886d4c7a07925ffd374167732f55dce8c491bfd9cd818a6cf
+  sha256: 2a5cfc5ae259e4e97f86b68dfffc152cdaffe94e2060b770cb827238d769fc05
 
 build:
   number: 0
@@ -20,6 +20,7 @@ requirements:
   build:
     - gnuconfig  # [unix]
     - {{ compiler("c") }}
+    - {{ stdlib("c") }}
     - cmake                # [win]
     - make
   host:
