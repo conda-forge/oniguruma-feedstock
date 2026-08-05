@@ -10,7 +10,7 @@ source:
   sha256: 2a5cfc5ae259e4e97f86b68dfffc152cdaffe94e2060b770cb827238d769fc05
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # https://abi-laboratory.pro/index.php?view=timeline&l=oniguruma 
     - {{ pin_subpackage('oniguruma', max_pin='x.x') }}
