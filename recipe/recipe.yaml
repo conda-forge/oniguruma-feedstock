@@ -1,64 +1,59 @@
-{% set version = "6.9.10" %}
+schema_version: 1
+
+context:
+  version: "6.9.10"
 
 package:
   name: oniguruma
-  version: {{ version }}
+  version: ${{ version }}
 
 source:
-  fn: onig-{{ version }}.tar.gz
-  url: https://github.com/kkos/oniguruma/releases/download/v{{ version }}/onig-{{ version }}.tar.gz
+  url: https://github.com/kkos/oniguruma/releases/download/v${{ version }}/onig-${{ version }}.tar.gz
   sha256: 2a5cfc5ae259e4e97f86b68dfffc152cdaffe94e2060b770cb827238d769fc05
 
 build:
   number: 1
-  run_exports:
-    # https://abi-laboratory.pro/index.php?view=timeline&l=oniguruma 
-    - {{ pin_subpackage('oniguruma', max_pin='x.x') }}
-
 
 requirements:
   build:
-    - gnuconfig  # [unix]
-    - {{ compiler("c") }}
-    - {{ stdlib("c") }}
-    - cmake                # [win]
+    - if: unix
+      then: gnuconfig
+    - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
+    - if: win
+      then: cmake
     - make
   host:
-    - msinttypes           # [win]
+    - if: win
+      then: msinttypes
+  run_exports:
+    - ${{ pin_subpackage('oniguruma', upper_bound='x.x') }}
 
-test:
-  commands:
-    # Check for headers.
-    {% set headers = [
-             "oniggnu",
-             "onigposix",
-             "oniguruma"
-    ] %}
-    {% for each_header in headers %}
-    - test -f "${PREFIX}/include/{{ each_header }}.h"          # [unix]
-    - if not exist "%LIBRARY_INC%\{{ each_header }}.h" exit 1  # [win]
-    {% endfor %}
-
-    # Check for libraries.
-    - test -f "${PREFIX}/lib/libonig.a"                # [unix]
-    - test -f "${PREFIX}/lib/libonig.so"               # [linux]
-    - test -f "${PREFIX}/lib/libonig.dylib"            # [osx]
-    - if not exist "%LIBRARY_BIN%\onig.dll" exit 1     # [win]
-    - if not exist "%LIBRARY_LIB%\onig.lib" exit 1     # [win]
-
-    # Check for pkg-config file.
-    - test -f "${PREFIX}/lib/pkgconfig/oniguruma.pc"   # [unix]
-
-    # Check for config executable.
-    - onig-config --version                            # [unix]
+tests:
+  - package_contents:
+      include:
+        - oniggnu.h
+        - onigposix.h
+        - oniguruma.h
+      lib:
+        - onig
+      files:
+        - if: unix
+          then:
+            - lib/libonig.a
+            - lib/pkgconfig/oniguruma.pc
+  - script:
+      - if: unix
+        then: onig-config --version
 
 about:
-  home: https://github.com/kkos/oniguruma
   license: BSD-2-Clause
   license_file: COPYING
   summary: A regular expression library.
+  homepage: https://github.com/kkos/oniguruma
 
 extra:
   recipe-maintainers:
     - jakirkham
     - kkos
+    - wolfv
