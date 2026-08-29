@@ -12,7 +12,7 @@ source:
   sha256: 2a5cfc5ae259e4e97f86b68dfffc152cdaffe94e2060b770cb827238d769fc05
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -22,10 +22,8 @@ requirements:
     - ${{ stdlib("c") }}
     - if: win
       then: cmake
-    - make
-  host:
-    - if: win
-      then: msinttypes
+    - if: unix
+      then: make
   run_exports:
     - ${{ pin_subpackage('oniguruma', upper_bound='x.x') }}
 
@@ -42,9 +40,22 @@ tests:
           then:
             - lib/libonig.a
             - lib/pkgconfig/oniguruma.pc
-  - script:
+  - files:
+      recipe:
+        - run_test.c
+    requirements:
+      run:
+        - if: win and arm64
+          then: ${{ compiler("c") }}
+    script:
       - if: unix
         then: onig-config --version
+      - if: win and arm64
+        then:
+          - call %CC% /nologo /I"%LIBRARY_INC%" run_test.c /link /LIBPATH:"%LIBRARY_LIB%" onig.lib /OUT:oniguruma_test.exe
+          - oniguruma_test.exe
+          - dumpbin /headers "%LIBRARY_BIN%\onig.dll" | findstr /I /C:"AA64 machine (ARM64)"
+          - dumpbin /headers oniguruma_test.exe | findstr /I /C:"AA64 machine (ARM64)"
 
 about:
   license: BSD-2-Clause
