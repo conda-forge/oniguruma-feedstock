@@ -27,7 +27,7 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=714&branchName=main">
             <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oniguruma-feedstock?branchName=main">
           </a>
         </summary>
@@ -36,14 +36,14 @@ Current build status
           <tbody><tr>
               <td>osx_64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=714&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oniguruma-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=714&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/oniguruma-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
@@ -179,7 +179,6 @@ To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
-
 For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
@@ -192,7 +191,7 @@ Terminology
                    and simplify the management of *many* feedstocks.
 
 **conda-forge** - the place where the feedstock and smithy live and work to
-                  produce the finished article (built conda distributions)
+                  produce the finished article (built conda distributions).
 
 
 Updating oniguruma-feedstock
@@ -223,4 +222,3 @@ Feedstock Maintainers
 * [@jakirkham](https://github.com/jakirkham/)
 * [@kkos](https://github.com/kkos/)
 * [@wolfv](https://github.com/wolfv/)
-
