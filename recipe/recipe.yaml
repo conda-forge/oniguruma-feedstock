@@ -24,7 +24,8 @@ requirements:
       then: cmake
     - make
   host:
-    - if: win
+    # Modern MSVC provides stdint.h; msinttypes has no win-arm64 build.
+    - if: win and target_platform != "win-arm64"
       then: msinttypes
   run_exports:
     - ${{ pin_subpackage('oniguruma', upper_bound='x.x') }}
